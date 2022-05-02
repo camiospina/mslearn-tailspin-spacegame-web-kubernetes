@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace TailSpin.SpaceGame.Web
 {
@@ -20,8 +21,8 @@ namespace TailSpin.SpaceGame.Web
         {
             using (WebClient webClient = new WebClient())
             {
-                string json = await webClient.DownloadStringTaskAsync($"{this._functionUrl}?page={page}&pageSize={pageSize}&mode={mode}&region={region}");
-                return JsonSerializer.Deserialize<LeaderboardResponse>(json);
+                var json = await webClient.DownloadStringTaskAsync($"{this._functionUrl}?page={page}&pageSize={pageSize}&mode={mode}&region={region}");
+                return JsonConvert.DeserializeObject<LeaderboardResponse>(json);                
             }
         }
     }
